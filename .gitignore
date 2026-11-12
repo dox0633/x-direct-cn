@@ -22,3 +22,11 @@ desktop.ini
 
 # 快捷方式与自启是本机生成的
 *.lnk
+
+# 图标设计过程稿（只提交成品 panel.ico / panel-icon.png 与生成器）
+icon_candidates.png
+icon_v*.png
+icon_sizes.png
+icon_preview.png
+icon_design.py
+
