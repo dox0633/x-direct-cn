@@ -169,6 +169,16 @@ if (-not $Push) {
     return
 }
 if (-not $Token) { throw 'push 需要 -Token 或 $env:GITHUB_TOKEN；GitHub 不接受账号密码。' }
+# 若本机配了 ghfast.top 之类的 GitHub URL 重写，推送时临时禁用：
+# 避免把 PAT 交给第三方代理转发，也避免代理改写认证头。
+$hadRewrite = $false
+$rewriteList = @(& git config --global --get-regexp 'insteadof' 2>$null | Out-String)
+$rewriteVal = if ($rewriteList -join '' -match 'ghfast\.top') { 'yes' } else { '' }
+if ($rewriteVal) {
+    $hadRewrite = $true
+    & git config --global --unset 'url.https://ghfast.top/https://github.com/.insteadof' | Out-Null
+    Write-Host "  已临时禁用 github.com → ghfast.top 重写" -ForegroundColor Gray
+}
 $pushUrl = "https://$($Owner):$Token@github.com/$Owner/$Repo.git"
 $env:GIT_TERMINAL_PROMPT = '0'
 $branch = (& git rev-parse --abbrev-ref HEAD).Trim()
@@ -182,7 +192,10 @@ try {
     & git remote set-url origin $RepoUrl
     Write-Host "  已推送到 $Owner/$Repo ($branch)" -ForegroundColor Green
 } finally {
-    # 无论成功失败都清掉可能的凭据痕迹
+    # 无论成功失败都清掉凭据痕迹，并恢复本机原有的重写规则
     & git remote set-url origin $RepoUrl 2>$null
+    if ($hadRewrite) {
+        & git config --global 'url.https://ghfast.top/https://github.com/.insteadof' 'https://github.com/' | Out-Null
+    }
 }
 Write-Host "`n完成: https://github.com/$Owner/$Repo" -ForegroundColor Cyan
