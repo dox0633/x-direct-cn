@@ -1,0 +1,34 @@
+{
+  "watch": [
+    "sama",
+    "OpenAI",
+    "OpenAIDevs",
+    "ChatGPT",
+    "gdb",
+    "OfficialLoganK",
+    "GeminiApp",
+    "GoogleDeepMind",
+    "demishassabis",
+    "GoogleAIStudio",
+    "GoogleAI"
+  ],
+  "interval": 30,
+  "workers": 4,
+  "retries": 5,
+  "replies": false,
+  "retweets": true,
+  "show_images": true,
+  "translate": false,
+  "theme": "light",
+  "popup_notify": true,
+  "desktop_notify": true,
+  "notify": {
+    "feishu_webhook": "",
+    "dingtalk_webhook": "",
+    "dingtalk_secret": "",
+    "serverchan_key": "",
+    "bark_url": "",
+    "wecom_webhook": "",
+    "desktop": true
+  }
+}

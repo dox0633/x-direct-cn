@@ -1,0 +1,24 @@
+# 运行时数据（每个用户自己生成，不提交）
+config.json
+items.json
+state.json
+translations.json
+watch.log
+panel.log
+media/
+__pycache__/
+*.py[cod]
+*.tmp
+
+# 本地截图（发布用图放在 docs/ 下）
+shot_*.png
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 快捷方式与自启是本机生成的
+*.lnk
